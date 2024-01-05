@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Modal, Input } from "antd";
 
+// import {
+//   DeleteOutlined
+// } from "@ant-design/icons";
+
 const Mahsulotnomi = () => {
   const [data, setData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,18 +48,37 @@ const Mahsulotnomi = () => {
     }
   };
 
+  // const deleteData = async (id) => {
+  //   try {
+  //     await axios.delete(`api/material-type/${id}`);
+  //     fetchData(); // Fetch data again after deletion to update the list
+  //   } catch (error) {
+  //     console.error("Error deleting data:", error);
+  //   }
+  // };
+
 
 
   return (
     <div>
+      <div className="flex justify-between">
       <Button
         type="primary"
         size="large"
         className="bg-blue-700"
         onClick={showModal}
       >
-        Qo'shishnima
+        Qo'shish
       </Button>
+      {/* <Button
+        type="danger"
+        size="large"
+        className="bg-red-700 text-white"
+        
+      >
+        O'chirish
+      </Button> */}
+      </div>
       <Modal
         title="Add New Item"
         open={isModalOpen}
@@ -77,8 +100,9 @@ const Mahsulotnomi = () => {
             className="bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
           >
             <div className="p-4 leading-normal">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                {item.name}
+              <h5 className=" flex justify-between mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <span>{item.name}</span>
+                {/* <Button type="primary" danger onClick={() => deleteData(item.id)}><DeleteOutlined /></Button> */}
               </h5>
             </div>
           </a>

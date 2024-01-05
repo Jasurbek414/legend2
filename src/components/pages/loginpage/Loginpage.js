@@ -52,35 +52,35 @@ export function Loginpage() {
   return (
     <>
       <div className="flex w-[100%] h-[100vh]">
-        <div className="bg-[#F5F5F5] w-[50%] flex items-center justify-center">
+        <div className="bg-[#F5F5F5] md:w-[50%] hidden md:flex items-center justify-center">
           <img
             src="https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80"
             className="h-full"
             alt="Login background"
           />
         </div>
-        <div className="w-[50%] flex items-center">
-          <div className="ml-28 w-[440px] h-[406px]">
-            <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+        <div className="w-full md:w-[50%] flex items-center">
+          <div className="md:ml-28 w-full px-3 md:w-[440px] md:h-[406px]">
+            <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" className="flex flex-col">
               <h1 className="text-neutral-800 text-5xl font-bold font-sans">
                 Tizimga kirish
               </h1>
 
               <input
-                className="w-[440px] h-[56px] pl-5 rounded-md border border-stone-300 mt-6"
+                className="md:w-[440px] h-[56px] pl-5 rounded-md border border-stone-300 mt-6"
                 type="text"
                 placeholder="Username"
                 {...register("username", { required: true })}
               />
               <input
-                className="w-[440px] h-[56px] pl-5 rounded-md border border-stone-300 mt-6"
+                className="md:w-[440px] h-[56px] pl-5 rounded-md border border-stone-300 mt-6"
                 type="password"
                 placeholder="Password"
                 {...register("password", { required: true })}
               />
               <button
                 type="submit"
-                className="cursor-pointer w-[440px] h-[52px] bg-neutral-900 rounded-lg flex items-center justify-center text-white text-lg font-bold font-sans mt-6"
+                className="cursor-pointer md:w-[440px] h-[52px] bg-neutral-900 rounded-lg flex items-center justify-center text-white text-lg font-bold font-sans mt-6"
               >
                 Kirish
               </button>

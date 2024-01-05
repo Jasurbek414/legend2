@@ -26,27 +26,27 @@ function Home() {
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-  }, []); // The empty dependency array ensures this effect runs once after the initial render
+  }, []);
 
   return (
     <div className="mt-5 grid sm:grid-cols-2 md:grid-cols-3 gap-3">
-      <Col>
-        <Card title="Product" bordered={false}>
+      <Col className="">
+        <Card className="bg-slate-800 text-white" title={<h2 className="text-white">Product category</h2>}  bordered={false}>
           Category: {itemCategories}
         </Card>
-      </Col>
+      </Col>  
       <Col>
-        <Card title="Material" bordered={false}>
+        <Card className="bg-slate-800 text-white" title={<h2 className="text-white">Material category</h2>} bordered={false}>
           Category: {materialCategories}
         </Card>
       </Col>
       <Col>
-        <Card title="Product" bordered={false}>
+        <Card className="bg-slate-800 text-white" title={<h2 className="text-white">Product items</h2>} bordered={false}>
           Count: {items}
         </Card>
       </Col>
       <Col>
-        <Card title="Material" bordered={false}>
+        <Card className="bg-slate-800 text-white" title={<h2 className="text-white">Material items</h2>} bordered={false}>
           Count: {materials}
         </Card>
       </Col>
