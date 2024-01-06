@@ -26,6 +26,7 @@ const Addtablep = () => {
     categoryId: parseInt(id),
   };
 
+  // tabledagi qoshish tugmasini madali
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -38,8 +39,22 @@ const Addtablep = () => {
     setIsModalOpen(false);
   };
 
+// olish madalini ozgaruvchilari
+  const [issModalOpen, setIssModalOpen] = useState(false);
+  const korsatModal = () => {
+    setIssModalOpen(true);
+  };
+  const qolOk = () => {
+    setIssModalOpen(false);
+  };
+  const qolCancel = () => {
+    setIssModalOpen(false);
+  };
+
   const navigate = useNavigate();
 
+
+  // searchni apisi bu value orqali qidirish
   const qidirData = async (inputValue) => {
     try {
       const response = await axios.get(`api/item/search?name=${inputValue}`);
@@ -122,6 +137,26 @@ const Addtablep = () => {
         return <span>{row?.quantity}</span>;
       },
     },
+    {
+      title: 'Action',
+      dataIndex: '',
+      key: 'x',
+      render: (text, record) => (
+        <div>
+          <Button type="primary" danger onClick={() => korsatModal(record)}>Olish</Button>
+          <Modal
+            title="Olish Modal"
+            open={record.issModalOpen} // Use record-specific state
+            onOk={() => qolOk(record)}
+            onCancel={() => qolCancel(record)}
+          >
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+          </Modal>
+        </div>
+      ),
+    },
   ];
 
   // product data bu modalda optionlarga get qilib map qilingan malumotlarni
@@ -203,6 +238,14 @@ const Addtablep = () => {
             />
           </div>
         </Modal>
+
+
+{/* olishni modali bu passdagi */}
+        {/* <Modal title="Basic Modal" open={issModalOpen} onOk={qolOk} onCancel={qolCancel}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal> */}
       </div>
       <Table
         className="mt-5"

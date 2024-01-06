@@ -40,6 +40,18 @@ const Addtablem = () => {
     setIsModalOpen(false);
   };
 
+  // olish madalini ozgaruvchilari
+  const [issModalOpen, setIssModalOpen] = useState(false);
+  const korsatModal = () => {
+    setIssModalOpen(true);
+  };
+  const qolOk = () => {
+    setIssModalOpen(false);
+  };
+  const qolCancel = () => {
+    setIssModalOpen(false);
+  };
+
   const navigate = useNavigate();
 
   const qidirData = async (inputValue) => {
@@ -147,6 +159,26 @@ const Addtablem = () => {
           </span>
         );
       },
+    },
+    {
+      title: 'Action',
+      dataIndex: '',
+      key: 'x',
+      render: (text, record) => (
+        <div>
+          <Button type="primary" danger onClick={() => korsatModal(record)}>Olish</Button>
+          <Modal
+            title="Olish Modal"
+            open={record.issModalOpen} // Use record-specific state
+            onOk={() => qolOk(record)}
+            onCancel={() => qolCancel(record)}
+          >
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+          </Modal>
+        </div>
+      ),
     },
   ];
 
