@@ -166,8 +166,8 @@ const Addtablem = () => {
       key: 'x',
       render: (text, record) => (
         <div>
-          <Button type="primary" danger onClick={() => korsatModal(record)}>Olish</Button>
-          <Modal
+          <Button type="primary" danger onClick={() => setIssModalOpen(record)}>Olish</Button>
+          {/* <Modal
             title="Olish Modal"
             open={record.issModalOpen} // Use record-specific state
             onOk={() => qolOk(record)}
@@ -176,7 +176,7 @@ const Addtablem = () => {
             <p>Some contents...</p>
             <p>Some contents...</p>
             <p>Some contents...</p>
-          </Modal>
+          </Modal> */}
         </div>
       ),
     },
@@ -256,6 +256,24 @@ const Addtablem = () => {
             />
           </div>
         </Modal>
+
+
+        {/* olish degan buttonniki madali */}
+        <Modal
+            title="Olish Modal"
+            open={!!issModalOpen} 
+            onOk={() => qolOk()}
+            okButtonProps={{ className: "bg-blue-500" }}
+            onCancel={() => qolCancel()}
+          >
+            <span>Miqdorini kiriting:</span>
+            <Input className="mt-3" placeholder="miqdor" type="number" />
+           
+          </Modal>
+
+
+
+
       </div>
       <Table
         className="mt-5"

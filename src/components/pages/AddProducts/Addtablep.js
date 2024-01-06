@@ -143,17 +143,8 @@ const Addtablep = () => {
       key: 'x',
       render: (text, record) => (
         <div>
-          <Button type="primary" danger onClick={() => korsatModal(record)}>Olish</Button>
-          <Modal
-            title="Olish Modal"
-            open={record.issModalOpen} // Use record-specific state
-            onOk={() => qolOk(record)}
-            onCancel={() => qolCancel(record)}
-          >
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-          </Modal>
+          <Button type="primary" danger onClick={() => setIssModalOpen(record)}>Olish</Button>
+        
         </div>
       ),
     },
@@ -238,6 +229,20 @@ const Addtablep = () => {
             />
           </div>
         </Modal>
+
+
+{/* olish degan buttonniki madali */}
+        <Modal
+            title="Olish Modal"
+            open={!!issModalOpen} 
+            onOk={() => qolOk()}
+            okButtonProps={{ className: "bg-blue-500" }}
+            onCancel={() => qolCancel()}
+          >
+            <span>Miqdorini kiriting:</span>
+            <Input className="mt-3" placeholder="miqdor" type="number" />
+           
+          </Modal>
 
 
 {/* olishni modali bu passdagi */}
