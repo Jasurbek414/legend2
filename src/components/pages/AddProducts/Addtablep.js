@@ -14,9 +14,12 @@ const Addtablep = () => {
   const [miqdori, setMiqdori] = useState("");
   const [description, setDescription] = useState("");
 
-  const [searchValue, setSearchValue] = useState("")
+  const [searchValue, setSearchValue] = useState("");
   const { Search } = Input;
-  const [qidir, setQidir ] = useState([])
+  const [qidir, setQidir] = useState([]);
+  const [oquan, setOquan] = useState("");
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const sendData = {
     itemType: nomiId,
@@ -26,8 +29,17 @@ const Addtablep = () => {
     categoryId: parseInt(id),
   };
 
+  // olish madalini ozgaruvchilari
+  const deleteData = {
+    materialTypeId: issModalOpen?.id,
+    categoryId: parseInt(id),
+    description: description,
+    quantity: parseInt(oquan),
+    adminId: parseInt(myId),
+  };
+
   // tabledagi qoshish tugmasini madali
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -39,12 +51,13 @@ const Addtablep = () => {
     setIsModalOpen(false);
   };
 
-// olish madalini ozgaruvchilari
+  // olish madalini ozgaruvchilari
   const [issModalOpen, setIssModalOpen] = useState(false);
   const korsatModal = () => {
     setIssModalOpen(true);
   };
   const qolOk = () => {
+    ochir();
     setIssModalOpen(false);
   };
   const qolCancel = () => {
@@ -53,23 +66,22 @@ const Addtablep = () => {
 
   const navigate = useNavigate();
 
-
   // searchni apisi bu value orqali qidirish
   const qidirData = async (inputValue) => {
     try {
       const response = await axios.get(`api/item/search?name=${inputValue}`);
       setQidir(response.data?.data);
       // setMaterial(response.data);
-  
+
       // console.log(response.data?.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-  
-    useEffect(() => {
-      qidirData();
-    }, []);
+
+  useEffect(() => {
+    qidirData();
+  }, []);
 
   async function fetchData() {
     try {
@@ -138,13 +150,14 @@ const Addtablep = () => {
       },
     },
     {
-      title: 'Action',
-      dataIndex: '',
-      key: 'x',
+      title: "Action",
+      dataIndex: "",
+      key: "x",
       render: (text, record) => (
         <div>
-          <Button type="primary" danger onClick={() => setIssModalOpen(record)}>Olish</Button>
-        
+          <Button type="primary" danger onClick={() => setIssModalOpen(record)}>
+            Olish
+          </Button>
         </div>
       ),
     },
@@ -176,13 +189,25 @@ const Addtablep = () => {
       });
   }
 
+  // item ochirish uchun yozilgan funksiya
+  async function ochir() {
+    await axios
+      .patch("api/material", deleteData)
+      .then((response) => {
+        fetchData();
+        // console.log("Yuborish muvaffaqiyatli amalga oshirildi:", response.data);
+      })
+      .catch((error) => {
+        console.error("Xatolik yuz berdi:", error);
+      });
+  }
+
   return (
     <div>
       <div className="flex justify-between">
         <Button onClick={() => navigate(-1)}>Orqaga</Button>
 
         <Search
-         
           placeholder="input search text"
           allowClear
           enterButton="Search"
@@ -230,22 +255,24 @@ const Addtablep = () => {
           </div>
         </Modal>
 
-
-{/* olish degan buttonniki madali */}
+        {/* olish degan buttonniki madali */}
         <Modal
-            title="Olish Modal"
-            open={!!issModalOpen} 
-            onOk={() => qolOk()}
-            okButtonProps={{ className: "bg-blue-500" }}
-            onCancel={() => qolCancel()}
-          >
-            <span>Miqdorini kiriting:</span>
-            <Input className="mt-3" placeholder="miqdor" type="number" />
-           
-          </Modal>
+          title="Olish Modal"
+          open={!!issModalOpen}
+          onOk={() => qolOk()}
+          okButtonProps={{ className: "bg-blue-500" }}
+          onCancel={() => qolCancel()}
+        >
+          <span>Miqdorini kiriting:</span>
+          <Input
+            className="mt-3"
+            placeholder="miqdor"
+            type="number"
+            onChange={(e) => setOquan(e.target.value)}
+          />
+        </Modal>
 
-
-{/* olishni modali bu passdagi */}
+        {/* olishni modali bu passdagi */}
         {/* <Modal title="Basic Modal" open={issModalOpen} onOk={qolOk} onCancel={qolCancel}>
         <p>Some contents...</p>
         <p>Some contents...</p>
