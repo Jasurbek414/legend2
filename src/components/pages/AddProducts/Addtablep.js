@@ -20,6 +20,7 @@ const Addtablep = () => {
   const [oquan, setOquan] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [issModalOpen, setIssModalOpen] = useState(false);
 
   const sendData = {
     itemType: nomiId,
@@ -31,12 +32,13 @@ const Addtablep = () => {
 
   // olish madalini ozgaruvchilari
   const deleteData = {
-    materialTypeId: issModalOpen?.id,
+    itemType: issModalOpen?.itemType?.id,
     categoryId: parseInt(id),
     description: description,
     quantity: parseInt(oquan),
     adminId: parseInt(myId),
   };
+ 
 
   // tabledagi qoshish tugmasini madali
 
@@ -52,7 +54,7 @@ const Addtablep = () => {
   };
 
   // olish madalini ozgaruvchilari
-  const [issModalOpen, setIssModalOpen] = useState(false);
+  
   const korsatModal = () => {
     setIssModalOpen(true);
   };
@@ -169,6 +171,8 @@ const Addtablep = () => {
       try {
         const response = await axios.get("api/item-type");
         setNomi(response.data.data);
+        // console.log(data);
+        
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -192,7 +196,7 @@ const Addtablep = () => {
   // item ochirish uchun yozilgan funksiya
   async function ochir() {
     await axios
-      .patch("api/material", deleteData)
+      .patch("api/item", deleteData)
       .then((response) => {
         fetchData();
         // console.log("Yuborish muvaffaqiyatli amalga oshirildi:", response.data);
