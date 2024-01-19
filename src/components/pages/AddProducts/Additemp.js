@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Button, Modal, Input } from "antd";
 
+import {  toast } from 'react-toastify';
+
 const Additemp = () => {
   const { id } = useParams();
   // console.log(id);
@@ -21,10 +23,28 @@ const Additemp = () => {
       const response = await axios.post("api/category", {
         name: inputValue,
       });
-      // console.log("Data added:", response.data);
-      fetchData(); 
+  
+      // Check if the response status is 200
+      if (response.status === 200) {
+        // Show success toast
+        toast.success("Data added successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+  
+        // Fetch data after success
+        fetchData();
+      } else {
+        // If status is not 200, show an error toast
+        toast.error("Failed to add data. Please try again later.", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
     } catch (error) {
       console.error("Error adding data:", error);
+      // Show an error toast for any other errors
+      toast.error("An error occurred. Please try again later.", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   };
 

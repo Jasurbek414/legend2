@@ -3,6 +3,8 @@ import { Table, Button, message, Modal, Form, Input, Select } from "antd";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
+import { toast } from 'react-toastify';
+
 const Addtablep = () => {
   // const [bottom, setBottom] = useState("bottomRight");
   const [current, setCurrent] = useState(1);
@@ -181,17 +183,35 @@ const Addtablep = () => {
     productData();
   }, []);
 
-  async function add() {
-    axios
-      .post("api/item", sendData)
-      .then((response) => {
-        fetchData();
-        // console.log("Yuborish muvaffaqiyatli amalga oshirildi:", response.data);
-      })
-      .catch((error) => {
-        console.error("Xatolik yuz berdi:", error);
+// tablega item qoshish
+
+async function add() {
+  try {
+    const response = await axios.post("api/item", sendData);
+
+    // Check if the response status is 200
+    if (response.status === 200) {
+      // Show success toast
+      toast.success("Data added successfully", {
+        position: toast.POSITION.TOP_RIGHT,
       });
+
+      // Fetch data after success
+      fetchData();
+    } else {
+      // If status is not 200, show an error toast
+      toast.error("Failed to add data. Please try again later.", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    // Show an error toast for any other errors
+    toast.error("An error occurred. Please try again later.", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   }
+}
 
   // item ochirish uchun yozilgan funksiya
   async function ochir() {

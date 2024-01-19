@@ -6,10 +6,10 @@ import { UserOutlined, LockOutlined, GroupOutlined } from "@ant-design/icons";
 export const Admins = () => {
   const [data, setData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [adminName, setAdminName] = useState('');
-  const [adminRole, setAdminRole] = useState('');
-  const [adminPassword, setAdminPassword] = useState('');
-  const role = sessionStorage.getItem('role');
+  const [adminName, setAdminName] = useState("");
+  const [adminRole, setAdminRole] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
+  const role = sessionStorage.getItem("role");
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -35,12 +35,10 @@ export const Admins = () => {
     fetchData();
   }, []);
 
-  const handleDelete = async (index) => {
+  const handleDelete = async (id) => {
     try {
-      await axios.delete(`api/users/${data[index].id}`);
-      const newData = [...data];
-      newData.splice(index, 1);
-      setData(newData);
+      await axios.delete(`api/users/${id}`);
+      setData(data.filter((ADMIN) => ADMIN.id !== id));
     } catch (error) {
       console.error("Error deleting admin:", error);
     }
@@ -61,11 +59,16 @@ export const Admins = () => {
 
   return (
     <div className="flex flex-col">
-      <Button hidden={role !== 'ADMIN'} className="bg-blue-500" type="primary" onClick={showModal}>
-        Admin qo'shish
+      <Button
+        hidden={role !== "ADMIN"}
+        className="bg-blue-500"
+        type="primary"
+        onClick={showModal}
+      >
+        Add Admin
       </Button>
       <Modal
-        title="Yangi admin qo'shish"
+        title="Add New Admin"
         open={isModalOpen}
         onOk={handleOk}
         okButtonProps={{ className: "bg-blue-500" }}
@@ -83,7 +86,7 @@ export const Admins = () => {
         <p className="mt-4">Role (darajasi)</p>
         <Input
           size="large"
-          placeholder="Darajasi"
+          placeholder="Role"
           prefix={<GroupOutlined />}
           value={adminRole}
           onChange={(e) => setAdminRole(e.target.value)}
@@ -92,18 +95,17 @@ export const Admins = () => {
         <p className="mt-4">Password</p>
         <Input
           size="large"
-          placeholder="password"
+          placeholder="Password"
           prefix={<LockOutlined />}
           value={adminPassword}
           onChange={(e) => setAdminPassword(e.target.value)}
         />
       </Modal>
-      
+
       <div className="overflow-x-auto">
         <div className="p-1.5 w-full inline-block align-middle">
           <div className="overflow-hidden border rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
-            
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
@@ -115,16 +117,16 @@ export const Admins = () => {
                   <th className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
                     Role
                   </th>
-                  <th className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase">
+                  {/* <th className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase">
                     Delete
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {data.map((admin, index) => (
-                  <tr key={index}>
+                {data.map((admin) => (
+                  <tr key={admin.id}>
                     <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                      {index + 1}
+                      {admin.id}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                       {admin.username}
@@ -132,18 +134,17 @@ export const Admins = () => {
                     <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                       {admin.role}
                     </td>
-                    <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                    {/* <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                       <button
                         className="text-red-500 hover:text-red-700"
-                        onClick={() => handleDelete(index)}
+                        onClick={() => handleDelete(admin.id)}
                       >
                         Delete
                       </button>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
-            
             </table>
           </div>
         </div>
